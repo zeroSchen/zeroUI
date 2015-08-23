@@ -11,9 +11,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver.OnPreDrawListener;
+import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 
+import com.gc.materialdesign.views.ButtonRectangle;
 import com.zero.ui.MainActivity;
 import com.zero.ui.R;
 
@@ -24,10 +26,9 @@ import java.util.List;
  * Created by Administrator on 2015/8/13.
  */
 public class WelcomeActivity extends AppCompatActivity {
-    // 首次使用程序的显示的欢迎图片
-    private int[] ids = { R.mipmap.wel_1,
-            R.mipmap.wel_1, R.mipmap.wel_1,
-            R.mipmap.wel_1 };
+    private int[] ids = { R.mipmap.w,
+            R.mipmap.w, R.mipmap.w,
+            R.mipmap.w };
 
     SharedPreferences share;
     private List<View> guides = new ArrayList<View>();
@@ -35,6 +36,7 @@ public class WelcomeActivity extends AppCompatActivity {
     private ImageView curDot;
     private int offset;
     private int curPos = 0;
+    ButtonRectangle button;
 
     SharedPreferences.Editor editor;
 
@@ -43,19 +45,18 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         share = getSharedPreferences("showWelcomm", Context.MODE_PRIVATE);
         editor = share.edit();
-        // 判断是否首次登录程序
-        if (share.contains("shownum")) {
-            setContentView(R.layout.activity_wel_com);
-            int num = share.getInt("shownum", 0);
-            editor.putInt("shownum", num++);
-            editor.commit();
-            skipActivity(1);
-        } else {
+//        if (share.contains("shownum")) {
+//            setContentView(R.layout.activity_wel_com);
+//            int num = share.getInt("shownum", 0);
+//            editor.putInt("shownum", num++);
+//            editor.commit();
+//            skipActivity(1);
+//        } else {
             editor.putInt("shownum", 1);
             editor.commit();
             setContentView(R.layout.activity_wel_com);
             initView();
-        }
+//        }
 
     }
 
@@ -73,20 +74,29 @@ public class WelcomeActivity extends AppCompatActivity {
         curDot.getViewTreeObserver().addOnPreDrawListener(
                 new OnPreDrawListener() {
                     public boolean onPreDraw() {
-                        offset = curDot.getWidth();
+                        offset = curDot.getWidth() + 10;
                         return true;
                     }
                 });
-
+        button = (ButtonRectangle) findViewById(R.id.button);
         WecommPagerAdapter adapter = new WecommPagerAdapter(guides);
         pager = (ViewPager) findViewById(R.id.showwelom_page);
         pager.setAdapter(adapter);
         pager.setOnPageChangeListener(new OnPageChangeListener() {
             public void onPageSelected(int arg0) {
                 moveCursorTo(arg0);
-                //if (arg0 == ids.length - 1) {// 到最后一张了
+                if (arg0 == ids.length - 1) {
                    // skipActivity(2);
-                //}
+                    TranslateAnimation mShowAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
+                            Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
+                            -1.0f, Animation.RELATIVE_TO_SELF, 0.0f);
+                    mShowAction.setDuration(1000);
+                    button.startAnimation(mShowAction);
+                    button.setVisibility(View.VISIBLE);
+                    button.setOnClickListener(new buttonOnClick());
+                }else{
+                    button.setVisibility(View.GONE);
+                }
                 curPos = arg0;
             }
 
@@ -98,6 +108,14 @@ public class WelcomeActivity extends AppCompatActivity {
 
         });
 
+    }
+
+    class buttonOnClick implements View.OnClickListener{
+
+        @Override
+        public void onClick(View v) {
+            skipActivity(1);
+        }
     }
 
     private void moveCursorTo(int position) {

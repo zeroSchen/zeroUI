@@ -1,17 +1,34 @@
 package com.zero.ui;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+
+import com.gc.materialdesign.views.ButtonRectangle;
+import com.zero.ui.ui.SecretTextView;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends AppCompatActivity {
+
+    private SecretTextView textView;
+
+    private ButtonRectangle button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        button = (ButtonRectangle) findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                textView.setText("This is really an amazing TextView");
+            }
+        });
     }
 
     @Override

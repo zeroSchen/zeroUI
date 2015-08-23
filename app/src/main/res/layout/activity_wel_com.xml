@@ -29,24 +29,28 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
+                android:layout_marginLeft="5dip"
                 android:src="@mipmap/icon_pagination_common" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
+                android:layout_marginLeft="5dip"
                 android:src="@mipmap/icon_pagination_common" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
+                android:layout_marginLeft="5dip"
                 android:src="@mipmap/icon_pagination_common" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
+                android:layout_marginLeft="5dip"
                 android:src="@mipmap/icon_pagination_common" />
 
 
@@ -56,8 +60,24 @@
             android:id="@+id/cur_dot"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/icon_pagination_checked" />
+            android:layout_marginLeft="5dp"
+            android:src="@mipmap/icon_pagination_checked"
+            />
     </FrameLayout>
+
+
+    <com.gc.materialdesign.views.ButtonRectangle
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#1E88E5"
+        android:text="开启旅程"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:layout_marginBottom="35dp"
+        />
 
 
 </RelativeLayout>  
